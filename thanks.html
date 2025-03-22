@@ -3,19 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arcade Win - Winthrop Harriman Associates LLC</title>
+  <title>Mission Success - Winthrop Harriman Associates LLC</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="game-container">
-    <h1>Arcade Win!</h1>
-    <p class="subtitle">Your score’s in! Data sent to <a href="mailto:info@winthropharrimanassociates.com">info@winthropharrimanassociates.com</a>.</p>
-    <p>Check your email for your scorecard and power-ups!</p>
-    <p>Ready for the next level? Contact <a href="mailto:info@winthropharrimanassociates.com">info@winthropharrimanassociates.com</a> for a free session!</p>
+  <div class="command-center">
+    <h1>Mission Success!</h1>
+    <p class="mission">Objective Complete, Commander!</p>
+    <div class="credits" id="credits">Credits: 0</div>
+    <div class="victory-message">
+      <p>Transmission sent to <a href="mailto:info@winthropharrimanassociates.com">info@winthropharrimanassociates.com</a>.</p>
+      <p>Check your terminal for your report and upgrade protocols!</p>
+    </div>
+    <div class="cta">
+      <p>Next Objective: Elite Status</p>
+      <p>Contact <a href="mailto:info@winthropharrimanassociates.com">info@winthropharrimanassociates.com</a> for a free strategic briefing!</p>
+      <a href="https://snapshot.winthropharrimanassociates.com" class="replay-btn">New Mission</a>
+    </div>
   </div>
   <footer>
-    © 2025 Winthrop Harriman Associates LLC | Nationwide Arcade Action
+    © 2025 Winthrop Harriman Associates LLC | Nationwide Command Operations
   </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const creditsElement = document.getElementById('credits');
+      let credits = 0;
+      const creditSound = new Audio('https://www.soundjay.com/buttons/sounds/coin-01.mp3');
+
+      // Victory confetti
+      confetti({ particleCount: 150, spread: 90, colors: ['#ff00ff', '#00ffff'] });
+
+      // Credit drop animation
+      const dropCredit = () => {
+        const credit = document.createElement('div');
+        credit.className = 'credit';
+        credit.style.left = `${Math.random() * (window.innerWidth - 20)}px`;
+        document.body.appendChild(credit);
+        credits += 10;
+        creditsElement.textContent = `Credits: ${credits}`;
+        creditSound.play();
+        setTimeout(() => credit.remove(), 2000);
+      };
+
+      // Drop 5 credits over 3 seconds
+      for (let i = 0; i < 5; i++) {
+        setTimeout(dropCredit, i * 600);
+      }
+    });
+  </script>
 </body>
 </html>
