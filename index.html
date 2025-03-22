@@ -3,81 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google Ads Performance Snapshot - Winthrop Harriman Associates LLC</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; background: #f9f9f9; text-align: center; }
-    h1 { color: #1A73E8; font-size: 24px; }
-    p { color: #333; font-size: 16px; }
-    .form-container, .results { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 20px; }
-    input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-    button { padding: 12px 20px; background: #1A73E8; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
-    button:hover { background: #1557b0; }
-    .results { display: none; text-align: left; }
-    .results h3 { color: #1A73E8; }
-    ul { list-style-type: disc; padding-left: 20px; }
-    footer { margin-top: 20px; font-size: 14px; color: #666; }
-    a { color: #1A73E8; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-  </style>
+  <title>Ad Performance Arcade - Winthrop Harriman Associates LLC</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Free Google Ads Performance Snapshot</h1>
-  <p>Enter your ad details for a quick performance check from Winthrop Harriman Associates LLC. Nationwide, no cost!</p>
-  
-  <div class="form-container">
-    <form id="snapshotForm" action="https://formspree.io/f/your-form-id" method="POST">
-      <input type="hidden" name="_subject" value="New Google Ads Snapshot Submission">
-      <input type="hidden" name="_next" value="https://Winthrop-Harriman-Associates-LLC.github.io/snapshot-tool/thanks.html">
-      <label for="spend">Monthly Google Ads Spend ($):</label>
-      <input type="number" id="spend" name="spend" min="0" required placeholder="e.g., 5000">
-      
-      <label for="convRate">Conversion Rate (%):</label>
-      <input type="number" id="convRate" name="convRate" step="0.1" min="0" max="100" required placeholder="e.g., 2.5">
-      
-      <label for="aov">Average Order Value ($):</label>
-      <input type="number" id="aov" name="aov" min="0" required placeholder="e.g., 100">
-      
-      <label for="email">Your Email:</label>
-      <input type="email" id="email" name="email" required placeholder="e.g., you@company.com">
-      
-      <button type="submit">Get Your Snapshot</button>
-    </form>
-  </div>
+  <div class="game-container">
+    <h1>Ad Performance Arcade</h1>
+    <p class="subtitle">Insert your stats and play for free—powered by Winthrop Harriman Associates LLC!</p>
+    
+    <div class="form-panel" id="formPanel">
+      <form id="snapshotForm" action="https://formspree.io/f/xqappjqr" method="POST">
+        <input type="hidden" name="_subject" value="New Ad Arcade Submission">
+        <input type="hidden" name="_next" value="https://snapshot.winthropharrimanassociates.com/thanks.html">
+        
+        <label for="spend">Ad Spend ($):</label>
+        <input type="number" id="spend" name="spend" min="0" required placeholder="5000">
+        
+        <label for="cpc">CPC ($):</label>
+        <input type="number" id="cpc" name="cpc" step="0.01" min="0" required placeholder="1.50">
+        
+        <label for="convRate">Conv. Rate (%):</label>
+        <input type="number" id="convRate" name="convRate" step="0.1" min="0" max="100" required placeholder="2.5">
+        
+        <label for="cpcv">Cost/Conv. ($):</label>
+        <input type="number" id="cpcv" name="cpcv" step="0.01" min="0" required placeholder="50">
+        
+        <label for="aov">AOV ($):</label>
+        <input type="number" id="aov" name="aov" min="0" required placeholder="100">
+        
+        <label for="email">Player Email:</label>
+        <input type="email" id="email" name="email" required placeholder="you@company.com">
+        
+        <button type="submit" class="start-btn">Start Game</button>
+      </form>
+    </div>
 
-  <div class="results" id="results">
-    <h3>Your Google Ads Snapshot</h3>
-    <div id="output"></div>
-    <p><strong>Quick Tips to Boost ROI:</strong></p>
-    <ul>
-      <li>Use long-tail keywords (e.g., "buy shoes online") to cut costs by up to 20%.</li>
-      <li>Add remarketing to re-engage visitors—potential 30%-70% conversion lift.</li>
-      <li>Test 3-5 ad copies weekly to find winners—could boost CTR by 10%-50%.</li>
-    </ul>
-    <p><strong>Want More?</strong> Contact us at <a href="mailto:info@winthropharrimanassociates.com">info@winthropharrimanassociates.com</a> for a free consultation!</p>
+    <div class="results-panel" id="resultsPanel">
+      <div class="score-display" id="score">0</div>
+      <div class="level" id="level"></div>
+      <div class="metrics" id="metrics"></div>
+      <div class="power-ups" id="powerUps"></div>
+      <button class="download-btn" id="downloadBtn">Grab Scorecard</button>
+      <div class="next-level">
+        <p>Next Level? Email <a href="mailto:info@winthropharrimanassociates.com">info@winthropharrimanassociates.com</a> for a free power-up session!</p>
+      </div>
+    </div>
   </div>
 
   <footer>
-    © 2025 Winthrop Harriman Associates LLC | Nationwide Online Services
+    © 2025 Winthrop Harriman Associates LLC | Nationwide Arcade Action
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.min.js"></script>
   <script>
     document.getElementById('snapshotForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
       const spend = parseFloat(document.getElementById('spend').value);
+      const cpc = parseFloat(document.getElementById('cpc').value);
       const convRate = parseFloat(document.getElementById('convRate').value) / 100;
+      const cpcv = parseFloat(document.getElementById('cpcv').value);
       const aov = parseFloat(document.getElementById('aov').value);
+      const email = document.getElementById('email').value;
 
-      const clicks = spend / 1.5;
-      const revenue = convRate * clicks * aov;
-      const currentROI = ((revenue - spend) / spend * 100).toFixed(1);
-      const benchmarkROI = 100;
+      const clicks = spend / cpc;
+      const conversions = clicks * convRate;
+      const revenue = conversions * aov;
+      const roi = (revenue - spend) / spend * 100;
+      const roas = revenue / spend;
+      const score = Math.min(Math.round((roi / 3) + (roas * 10) + (convRate * 100)), 100);
 
-      const output = `
-        <p><strong>Current Estimated ROI:</strong> ${currentROI}%</p>
-        <p><strong>Industry Benchmark:</strong> ${benchmarkROI}%+</p>
-        <p>Your ads could be underperforming—optimize to close the gap!</p>
+      let level = 'Beginner';
+      if (score >= 80) level = 'Elite';
+      else if (score >= 50) level = 'Pro';
+
+      const metrics = `
+        <p><span>${clicks.toFixed(0)}</span> Clicks</p>
+        <p><span>${conversions.toFixed(0)}</span> Conversions</p>
+        <p><span>$${revenue.toFixed(0)}</span> Revenue</p>
+        <p><span>${roi.toFixed(1)}%</span> ROI</p>
+        <p><span>${roas.toFixed(2)}x</span> ROAS</p>
       `;
-      document.getElementById('output').innerHTML = output;
-      document.getElementById('results').style.display = 'block';
+      const powerUps = `
+        <h3>Power-Ups</h3>
+        <ul>
+          ${roi < 100 ? '<li>Long-Tail Keywords: +20% Efficiency</li>' : ''}
+          ${convRate < 0.03 ? '<li>Remarketing: +50% Conversions</li>' : ''}
+          ${roas < 2 ? '<li>Ad Testing: +30% ROAS</li>' : ''}
+          <li>Free Consultation: Unlock All!</li>
+        </ul>
+      `;
+
+      const formPanel = document.getElementById('formPanel');
+      const resultsPanel = document.getElementById('resultsPanel');
+      formPanel.style.opacity = '0';
+      setTimeout(() => {
+        formPanel.style.display = 'none';
+        resultsPanel.style.display = 'block';
+        resultsPanel.style.opacity = '1';
+
+        let currentScore = 0;
+        const scoreElement = document.getElementById('score');
+        const animateScore = setInterval(() => {
+          currentScore += Math.ceil(score / 50);
+          if (currentScore >= score) {
+            currentScore = score;
+            clearInterval(animateScore);
+            if (score >= 80) confetti({ particleCount: 150, spread: 90 });
+          }
+          scoreElement.textContent = currentScore;
+        }, 20);
+
+        document.getElementById('level').textContent = `Level: ${level}`;
+        document.getElementById('metrics').innerHTML = metrics;
+        document.getElementById('powerUps').innerHTML = powerUps;
+
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+          alert(`Scorecard beamed to ${email}! Check your inbox for your arcade stats!`);
+        });
+      }, 500);
+
+      setTimeout(() => this.submit(), 3000); // Submit after game reveal
     });
   </script>
 </body>
