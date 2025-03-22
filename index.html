@@ -10,7 +10,7 @@
 <body>
   <div class="game-container">
     <h1>Ad Performance Arcade</h1>
-    <p class="subtitle">Insert your stats and play for free—powered by Winthrop Harriman Associates LLC!</p>
+    <p class="subtitle">Plug in your stats, score big, and level up—free from Winthrop Harriman Associates LLC!</p>
     
     <div class="form-panel" id="formPanel">
       <form id="snapshotForm" action="https://formspree.io/f/xqappjqr" method="POST">
@@ -20,33 +20,38 @@
         <label for="spend">Ad Spend ($):</label>
         <input type="number" id="spend" name="spend" min="0" required placeholder="5000">
         
-        <label for="cpc">CPC ($):</label>
+        <label for="cpc">Cost Per Click ($):</label>
         <input type="number" id="cpc" name="cpc" step="0.01" min="0" required placeholder="1.50">
         
-        <label for="convRate">Conv. Rate (%):</label>
+        <label for="convRate">Conversion Rate (%):</label>
         <input type="number" id="convRate" name="convRate" step="0.1" min="0" max="100" required placeholder="2.5">
         
-        <label for="cpcv">Cost/Conv. ($):</label>
+        <label for="cpcv">Cost Per Conversion ($):</label>
         <input type="number" id="cpcv" name="cpcv" step="0.01" min="0" required placeholder="50">
         
-        <label for="aov">AOV ($):</label>
+        <label for="aov">Average Order Value ($):</label>
         <input type="number" id="aov" name="aov" min="0" required placeholder="100">
         
         <label for="email">Player Email:</label>
         <input type="email" id="email" name="email" required placeholder="you@company.com">
         
-        <button type="submit" class="start-btn">Start Game</button>
+        <button type="submit" class="start-btn">Launch Game</button>
       </form>
     </div>
 
     <div class="results-panel" id="resultsPanel">
       <div class="score-display" id="score">0</div>
       <div class="level" id="level"></div>
+      <div class="bonus" id="bonus"></div>
       <div class="metrics" id="metrics"></div>
+      <div class="leaderboard" id="leaderboard"></div>
       <div class="power-ups" id="powerUps"></div>
-      <button class="download-btn" id="downloadBtn">Grab Scorecard</button>
+      <button class="download-btn" id="downloadBtn">Claim Scorecard</button>
+      <button class="submit-btn" id="submitBtn">Submit Score</button>
+      <button class="reset-btn" id="resetBtn">Play Again</button>
+      <p class="captcha-note">If CAPTCHA pops up, complete it to submit!</p>
       <div class="next-level">
-        <p>Next Level? Email <a href="mailto:info@winthropharrimanassociates.com">info@winthropharrimanassociates.com</a> for a free power-up session!</p>
+        <p>Next Level? Email <a href="mailto:info@winthropharrimanassociates.com">info@winthropharrimanassociates.com</a> for a free boost!</p>
       </div>
     </div>
   </div>
@@ -56,76 +61,6 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.min.js"></script>
-  <script>
-    document.getElementById('snapshotForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const spend = parseFloat(document.getElementById('spend').value);
-      const cpc = parseFloat(document.getElementById('cpc').value);
-      const convRate = parseFloat(document.getElementById('convRate').value) / 100;
-      const cpcv = parseFloat(document.getElementById('cpcv').value);
-      const aov = parseFloat(document.getElementById('aov').value);
-      const email = document.getElementById('email').value;
-
-      const clicks = spend / cpc;
-      const conversions = clicks * convRate;
-      const revenue = conversions * aov;
-      const roi = (revenue - spend) / spend * 100;
-      const roas = revenue / spend;
-      const score = Math.min(Math.round((roi / 3) + (roas * 10) + (convRate * 100)), 100);
-
-      let level = 'Beginner';
-      if (score >= 80) level = 'Elite';
-      else if (score >= 50) level = 'Pro';
-
-      const metrics = `
-        <p><span>${clicks.toFixed(0)}</span> Clicks</p>
-        <p><span>${conversions.toFixed(0)}</span> Conversions</p>
-        <p><span>$${revenue.toFixed(0)}</span> Revenue</p>
-        <p><span>${roi.toFixed(1)}%</span> ROI</p>
-        <p><span>${roas.toFixed(2)}x</span> ROAS</p>
-      `;
-      const powerUps = `
-        <h3>Power-Ups</h3>
-        <ul>
-          ${roi < 100 ? '<li>Long-Tail Keywords: +20% Efficiency</li>' : ''}
-          ${convRate < 0.03 ? '<li>Remarketing: +50% Conversions</li>' : ''}
-          ${roas < 2 ? '<li>Ad Testing: +30% ROAS</li>' : ''}
-          <li>Free Consultation: Unlock All!</li>
-        </ul>
-      `;
-
-      const formPanel = document.getElementById('formPanel');
-      const resultsPanel = document.getElementById('resultsPanel');
-      formPanel.style.opacity = '0';
-      setTimeout(() => {
-        formPanel.style.display = 'none';
-        resultsPanel.style.display = 'block';
-        resultsPanel.style.opacity = '1';
-
-        let currentScore = 0;
-        const scoreElement = document.getElementById('score');
-        const animateScore = setInterval(() => {
-          currentScore += Math.ceil(score / 50);
-          if (currentScore >= score) {
-            currentScore = score;
-            clearInterval(animateScore);
-            if (score >= 80) confetti({ particleCount: 150, spread: 90 });
-          }
-          scoreElement.textContent = currentScore;
-        }, 20);
-
-        document.getElementById('level').textContent = `Level: ${level}`;
-        document.getElementById('metrics').innerHTML = metrics;
-        document.getElementById('powerUps').innerHTML = powerUps;
-
-        document.getElementById('downloadBtn').addEventListener('click', () => {
-          alert(`Scorecard beamed to ${email}! Check your inbox for your arcade stats!`);
-        });
-      }, 500);
-
-      setTimeout(() => this.submit(), 3000); // Submit after game reveal
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
