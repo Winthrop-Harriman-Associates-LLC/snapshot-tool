@@ -3,62 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Step into the Ad Performance Challenge arcade! Optimize your Google Ads and rank up with Winthrop Harriman Associates LLC.">
   <title>Ad Performance Challenge - Winthrop Harriman Associates LLC</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="command-center">
+  <header class="command-header">
     <h1>Ad Performance Challenge</h1>
-    <p class="mission">Commander, deploy your ad stats to optimize and rank up—free from Winthrop Harriman Associates LLC!</p>
-    <div class="timer" id="timer">Mission Time: 60s</div>
-    <div class="credits" id="credits">Credits: 0</div>
-    
-    <div class="input-console" id="inputConsole">
-      <form id="challengeForm">
+    <button id="tutorialBtn" aria-label="Show Mission Briefing">Mission Briefing</button>
+  </header>
+
+  <main class="command-center">
+    <section class="mission-info">
+      <p class="mission">Commander, deploy your ad stats to optimize and rank up—free from Winthrop Harriman Associates LLC!</p>
+      <div class="timer" id="timer" aria-live="polite">Mission Time: 60s</div>
+      <div class="credits" id="credits" aria-live="polite">Credits: 0</div>
+    </section>
+
+    <section class="input-console" id="inputConsole" aria-labelledby="inputHeader">
+      <h2 id="inputHeader" class="visually-hidden">Input Console</h2>
+      <form id="challengeForm" aria-describedby="formInstructions">
+        <p id="formInstructions" class="visually-hidden">Enter your Google Ads metrics to start the arcade challenge.</p>
         <input type="hidden" name="_subject" value="New Ad Challenge Submission">
-        <input type="hidden" name="_next" value="https://snapshot.winthropharrimanassociates.com/thanks.html">
+        <input type="hidden" name="_next" value="/html/thanks.html">
         
-        <label for="spend">Ad Spend ($):</label>
-        <input type="number" id="spend" name="spend" min="0" required placeholder="5000">
+        <div class="form-group">
+          <label for="spend">Ad Spend ($):</label>
+          <input type="number" id="spend" name="spend" min="0" step="1" required placeholder="5000" aria-required="true">
+        </div>
         
-        <label for="cpc">Cost Per Click ($):</label>
-        <input type="number" id="cpc" name="cpc" step="0.01" min="0" required placeholder="1.50">
+        <div class="form-group">
+          <label for="cpc">Cost Per Click ($):</label>
+          <input type="number" id="cpc" name="cpc" step="0.01" min="0" required placeholder="1.50" aria-required="true">
+        </div>
         
-        <label for="convRate">Conversion Rate (%):</label>
-        <input type="number" id="convRate" name="convRate" step="0.1" min="0" max="100" required placeholder="2.5">
+        <div class="form-group">
+          <label for="convRate">Conversion Rate (%):</label>
+          <input type="number" id="convRate" name="convRate" step="0.1" min="0" max="100" required placeholder="2.5" aria-required="true">
+        </div>
         
-        <label for="cpcv">Cost Per Conversion ($):</label>
-        <input type="number" id="cpcv" name="cpcv" step="0.01" min="0" required placeholder="50">
+        <div class="form-group">
+          <label for="cpcv">Cost Per Conversion ($):</label>
+          <input type="number" id="cpcv" name="cpcv" step="0.01" min="0" required placeholder="50" aria-required="true">
+        </div>
         
-        <label for="aov">Average Order Value ($):</label>
-        <input type="number" id="aov" name="aov" min="0" required placeholder="100">
+        <div class="form-group">
+          <label for="aov">Average Order Value ($):</label>
+          <input type="number" id="aov" name="aov" min="0" step="1" required placeholder="100" aria-required="true">
+        </div>
         
-        <label for="email">Commander Email:</label>
-        <input type="email" id="email" name="email" required placeholder="you@company.com">
+        <div class="form-group">
+          <label for="email">Commander Email:</label>
+          <input type="email" id="email" name="email" required placeholder="you@company.com" aria-required="true">
+        </div>
+        
+        <div class="form-group">
+          <label for="difficulty">Difficulty Level:</label>
+          <select id="difficulty" name="difficulty" aria-describedby="difficultyDesc">
+            <option value="easy">Easy (90s, 0.8x Score)</option>
+            <option value="medium" selected>Medium (60s, 1x Score)</option>
+            <option value="hard">Hard (45s, 1.2x Score)</option>
+          </select>
+          <p id="difficultyDesc" class="visually-hidden">Choose difficulty to adjust time and score multiplier.</p>
+        </div>
         
         <button type="submit" class="launch-btn">Launch Mission</button>
       </form>
-    </div>
+    </section>
 
-    <div class="results-dashboard" id="resultsDashboard">
-      <div class="rank-display" id="rank">Rank: 0</div>
-      <div class="badges" id="badges"></div>
-      <div class="metrics" id="metrics"></div>
-      <div class="leaderboard" id="leaderboard"></div>
-      <div class="upgrades" id="upgrades"></div>
-      <button class="download-btn" id="downloadBtn">Download Report</button>
-      <button class="submit-btn" id="submitBtn">Submit Mission</button>
-      <button class="reset-btn" id="resetBtn">New Mission</button>
-      <p class="briefing">Mission complete? Contact <a href="mailto:info@winthropharrimanassociates.com">info@winthropharrimanassociates.com</a> for elite upgrades!</p>
-    </div>
-  </div>
+    <section class="results-dashboard" id="resultsDashboard" aria-labelledby="resultsHeader" hidden>
+      <h2 id="resultsHeader" class="visually-hidden">Results Dashboard</h2>
+      <div class="rank-display" id="rank" aria-live="polite">Rank: 0</div>
+      <div class="badges" id="badges" aria-label="Earned Badges"></div>
+      <div class="metrics" id="metrics" aria-label="Performance Metrics"></div>
+      <div class="leaderboard" id="leaderboard" aria-label="Leaderboard"></div>
+      <div class="upgrades" id="upgrades" aria-label="Upgrade Protocols"></div>
+      <div class="button-group">
+        <button class="download-btn" id="downloadBtn">Download Report</button>
+        <button class="submit-btn" id="submitBtn">Submit Mission</button>
+        <button class="reset-btn" id="resetBtn">New Mission</button>
+      </div>
+      <p class="briefing">Mission complete? Contact <a href="mailto:info@winthropharrimanassociates.com">Command HQ</a> for elite upgrades!</p>
+    </section>
+  </main>
 
   <footer>
-    © 2025 Winthrop Harriman Associates LLC | Nationwide Command Operations
+    <p>© 2025 Winthrop Harriman Associates LLC | Nationwide Command Operations</p>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.min.js"></script>
-  <script src="script.js"></script>
+  <script src="/js/script.js"></script>
+  <script type="module">
+    import { showTutorial } from '/js/tutorial.js';
+    document.getElementById('tutorialBtn').addEventListener('click', showTutorial);
+  </script>
 </body>
 </html>
